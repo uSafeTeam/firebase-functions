@@ -114,14 +114,13 @@ export async function deleteRevenueCatSubscriber(
   const encodedUid = encodeURIComponent(uid);
   const url = `${REVENUECAT_BASE_URL}/subscribers/${encodedUid}`;
 
-  // Modo teste: exclusao real no RevenueCat desabilitada.
-  // const response = await fetch(url, {
-  //   method: "DELETE",
-  //   headers: buildHeaders(revenueCatSecretKey),
-  // });
-  // if (!response.ok) {
-  //   throw new Error(`RevenueCat DELETE subscriber failed with status ${response.status}`);
-  // }
+  const response = await fetch(url, {
+    method: "DELETE",
+    headers: buildHeaders(revenueCatSecretKey),
+  });
+  if (!response.ok) {
+    throw new Error(`RevenueCat DELETE subscriber failed with status ${response.status}`);
+  }
 
   void revenueCatSecretKey;
   void url;

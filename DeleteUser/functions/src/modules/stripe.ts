@@ -94,8 +94,7 @@ export async function deleteStripeCustomer(
   stripeClient: any,
   customerId: string,
 ): Promise<StripeDeleteResult> {
-  // Modo teste: exclusao real no Stripe desabilitada.
-  // await stripeClient.customers.del(customerId);
+  await stripeClient.customers.del(customerId);
 
   void stripeClient;
 
