@@ -35,30 +35,16 @@ function isPremiumProduct(priceProduct: string | { id: string } | null): boolean
   return priceProduct.id === PREMIUM_PRODUCT_ID;
 }
 
-function isFutureUnixSeconds(value: number | undefined): boolean | null {
-  if (typeof value !== "number" || Number.isNaN(value)) {
-    return null;
-  }
-
-  return value * 1000 > Date.now();
-}
-
 function isSubscriptionVigente(subscription: StripeSubscription): boolean {
   if (subscription.status === "active" || subscription.status === "trialing" || subscription.status === "past_due") {
     return true;
   }
 
-  if (subscription.status !== "canceled") {
+  if (subscription.status === "canceled") {
     return false;
   }
 
-  const canceledStillInPeriod = isFutureUnixSeconds(subscription.current_period_end);
-  if (canceledStillInPeriod === null) {
-    // Fail-safe: se o payload estiver inconsistente, bloqueia exclusao.
-    return true;
-  }
-
-  return canceledStillInPeriod;
+  return false;
 }
 
 export async function checkStripePremium(

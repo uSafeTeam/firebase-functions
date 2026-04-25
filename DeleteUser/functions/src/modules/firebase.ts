@@ -17,8 +17,7 @@ if (!admin.apps.length) {
 }
 
 export async function deleteFirebaseAuth(uid: string): Promise<FirebaseAuthDeleteResult> {
-  // Modo teste: exclusao real no Firebase Auth desabilitada.
-  // await admin.auth().deleteUser(uid);
+  await admin.auth().deleteUser(uid);
 
   return {
     uid,
@@ -32,9 +31,8 @@ export async function deleteFirestoreUserData(uid: string): Promise<FirestoreDel
   const usersPath = `users/${uid}`;
   const customersPath = `customers/${uid}`;
 
-  // Modo teste: exclusao real no Firestore desabilitada.
-  // await db.recursiveDelete(db.doc(usersPath));
-  // await db.recursiveDelete(db.doc(customersPath));
+  await db.recursiveDelete(db.doc(usersPath));
+  await db.recursiveDelete(db.doc(customersPath));
 
   void db;
 
